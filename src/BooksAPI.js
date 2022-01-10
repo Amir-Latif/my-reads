@@ -4,7 +4,7 @@ const api = "https://reactnd-books-api.udacity.com";
 let token = localStorage.token;
 if (!token) {
   let string = Math.random().toString(36);
-  token = localStorage.token = string.substring(-8);
+  token = localStorage.token = string.substring(string.length -8);
 }
 
 const headers = {
