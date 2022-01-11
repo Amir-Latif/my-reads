@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Col } from "react-bootstrap";
 import { update } from "../BooksAPI";
 
-export default function BookCard({ book, index, state, updateState }) {
+export default function BookCard({ book, state, updateState, books }) {
   return (
     <Col>
       <Card className="m-2">
@@ -26,7 +26,13 @@ export default function BookCard({ book, index, state, updateState }) {
           )}
 
           <select
-            defaultValue={book.shelf}
+            defaultValue={
+              book.shelf
+                ? book.shelf
+                : books.filter((b) => b.id === book.id)[0]
+                ? books.filter((b) => b.id === book.id)[0].shelf
+                : "none"
+            }
             className="form-select"
             onChange={(e) => {
               let newBooks = [...state];

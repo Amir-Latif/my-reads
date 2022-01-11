@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Container, Row } from "react-bootstrap";
-import { search } from "../BooksAPI";
+import { search, getAll } from "../BooksAPI";
 import BookCard from "./BookCard";
 
 export default function Search() {
   const navigate = useNavigate();
   const [searchResults, getSearchResults] = useState([]);
+  const [books, setBooks] = useState([]);
+
+  useEffect(() => {
+    books.length === 0 && getAll().then((res) => setBooks(res));
+  });
 
   return (
     <Container className="my-3">
@@ -27,10 +32,7 @@ export default function Search() {
           onChange={(e) =>
             e.target.value === ""
               ? getSearchResults([])
-              : search(e.target.value).then((res) => {
-                  console.log(res);
-                  getSearchResults(res);
-                })
+              : search(e.target.value).then((res) => getSearchResults(res))
           }
         />
       </div>
@@ -40,9 +42,9 @@ export default function Search() {
             {searchResults.map((book, index) => (
               <BookCard
                 key={index}
+                books={books}
                 book={book}
                 state={searchResults}
-                index={index}
                 updateState={getSearchResults}
               />
             ))}

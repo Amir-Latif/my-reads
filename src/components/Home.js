@@ -36,9 +36,8 @@ export default function Home() {
                   .map((book, index) => (
                     <BookCard
                       key={index}
-                      book={book}
-                      index={index}
                       state={books}
+                      book={book}
                       updateState={setBooks}
                     />
                   ))
